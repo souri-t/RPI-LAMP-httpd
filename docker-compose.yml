@@ -1,0 +1,21 @@
+version: '3.0'
+services:
+    httpdphp:
+        build: ./php
+        privileged: true
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - ./php/htdocs:/var/www/html
+        depends_on:
+            - db
+    db:
+        image: hypriot/rpi-mysql
+        env_file: ./db/.env
+        ports:
+        - "3306:3306"
+        volumes:
+        - db-data:/var/lib/mysql
+volumes:
+    db-data:
